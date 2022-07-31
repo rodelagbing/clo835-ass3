@@ -2,7 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
+  namespace: guestbook
   labels:
+    owner: Rodel_Agbing
+    desc: clo835-assignment3
     app.kubernetes.io/name: mongo
     app.kubernetes.io/component: backend
 spec:
