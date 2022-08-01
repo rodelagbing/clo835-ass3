@@ -10,3 +10,17 @@ reclaimPolicy: Delete
 # Uncomment the following line if you need to bind the volume Immediately 
 # volumeBindingMode: Immediate
 volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc 
+  namespace: lab3
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi 
