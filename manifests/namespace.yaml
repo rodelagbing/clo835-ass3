@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: guestbook
+  name: lab3
   labels:
     owner: Rodel_Agbing
     desc: clo835-assignment3
