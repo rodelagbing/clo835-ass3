@@ -38,4 +38,5 @@ spec:
       volumes:
       - name: mongodb-datastore
         persistentVolumeClaim:
-            claimName: mongo-pvc
+            #claimName: mongo-pvc
+            claimName: mongodb-pvc-hp
