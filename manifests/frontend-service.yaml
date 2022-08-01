@@ -2,15 +2,22 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: lab3
   labels:
+    owner: Rodel_Agbing
+    desc: clo835-assignment3
     app.kubernetes.io/name: guestbook
     app.kubernetes.io/component: frontend
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
-  # type: LoadBalancer
+  type: LoadBalancer
   ports:
   - port: 80
+    targetPort: 80
+    # Optional field
+    # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+    # This will avoid port conflict which may occur when port was defined
   selector:
     app.kubernetes.io/name: guestbook
     app.kubernetes.io/component: frontend

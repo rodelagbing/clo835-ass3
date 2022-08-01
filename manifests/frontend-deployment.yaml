@@ -2,7 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: lab3
   labels:
+    owner: Rodel_Agbing
+    desc: clo835-assignment3
     app.kubernetes.io/name: guestbook
     app.kubernetes.io/component: frontend
 spec:
@@ -10,7 +13,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: guestbook
       app.kubernetes.io/component: frontend
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
@@ -20,7 +23,6 @@ spec:
       containers:
       - name: guestbook
         image: paulczar/gb-frontend:v5
-        # image: gcr.io/google-samples/gb-frontend:v4
         resources:
           requests:
             cpu: 100m
