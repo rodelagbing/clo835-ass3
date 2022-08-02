@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab3-bonus
+  labels:
+    owner: Rodel_Agbing
+    desc: clo835-assignment3
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-configmap
+  namespace: lab3-bonus
+data:
+  APP_COLOR_ENV: "yellow" 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: webapp-secret
+  namespace: lab3-bonus
+#type: Opaque
+data:
+  APP_COLOR_ENV: "gReen+==" 
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-env-from-configmap
+  namespace: lab3-bonus
+  labels: 
+    app: webapp_configmap
+spec:
+  containers:
+  - image: mmumshad/simple-webapp-color
+    env:
+    - name: APP_COLOR
+      valueFrom: 
+        configMapKeyRef:
+          name: webapp-configmap
+          key: APP_COLOR_ENV
+    name: webapp-cont-configmap
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-env-from-secret
+  namespace: lab3-bonus
+  labels: 
+    app: webapp-secret
+spec:
+  containers:
+  - image: mmumshad/simple-webapp-color
+    env:
+    - name: APP_COLOR
+      valueFrom: 
+        configMapKeyRef:
+          name: webapp-secret
+          key: APP_COLOR_ENV
+    name: webapp-cont-secret
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-cm-svc
+  namespace: lab3-bonus
+  labels:
+    app: webapp-configmap
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: webapp-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-secret-svc
+  namespace: lab3-bonus
+  labels:
+    app: webapp-secret
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: webapp-secret
